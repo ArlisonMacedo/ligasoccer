@@ -11,20 +11,23 @@ datasource db {
 }
 
 model Team {
-  id    String @id @default(uuid())
-  name  String
-  city  String
-  couch String
+  id      String   @id @default(uuid())
+  name    String
+  city    String
+  couch   String
+  players Player[]
 
   @@map("teams")
 }
 
 model Player {
-  id      String @id @default(uuid())
+  id      String  @id @default(uuid())
   name    String
   cpf     String
   rg      String
   address String
+  Team    Team?   @relation(fields: [teamId], references: [id])
+  teamId  String?
 
   @@map("players")
 }

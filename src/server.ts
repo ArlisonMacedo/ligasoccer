@@ -23,7 +23,7 @@ app.post('/teams', async (request, reply) => {
         data: {
             name: data.name,
             city: data.city,
-            couch: data.couch
+            couch: data.couch,
         }
     })
 
@@ -34,6 +34,28 @@ app.get('/teams', async (request, reply) => {
     const teams = await prisma.team.findMany()
 
     return reply.status(200).send({ teams })
+})
+
+app.post('/players', async (request, reply) => {
+    const PlayerSchema = z.object({
+        name: z.string().min(8),
+        cpf: z.string().min(11),
+        rg: z.string().min(6),
+        address: z.string()
+    })
+
+    const data = PlayerSchema.parse(request.body)
+
+    const player = await prisma.player.create({
+        data: {
+            name: data.name,
+            cpf: data.cpf,
+            rg: data.rg,
+            address: data.address
+        }
+    })
+
+    return reply.status(201).send({ playerId: player.id })
 })
 
 app.listen({ port: 3333 }).then(() => {
