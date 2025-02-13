@@ -15,7 +15,6 @@ app.post('/teams', async (request, reply) => {
         city: z.string(),
         couch: z.string().min(4),
     })
-    console.log(request.body)
 
     const data = TeamsSchema.parse(request.body)
 
@@ -31,7 +30,11 @@ app.post('/teams', async (request, reply) => {
 });
 
 app.get('/teams', async (request, reply) => {
-    const teams = await prisma.team.findMany()
+    const teams = await prisma.team.findMany({
+        include: {
+            players: true
+        }
+    })
 
     return reply.status(200).send({ teams })
 })
@@ -41,17 +44,29 @@ app.post('/players', async (request, reply) => {
         name: z.string().min(8),
         cpf: z.string().min(11),
         rg: z.string().min(6),
-        address: z.string()
+        address: z.string(),
+        id: z.string()
     })
+
 
     const data = PlayerSchema.parse(request.body)
 
+    const teamIdSearch = await prisma.team.findFirst({
+        where: {
+            id: data.id
+        }
+    })
+    // console.log(teamIdSearch?.id)
+    if (!teamIdSearch) {
+        return reply.status(402).send({ message: 'Time Não Selecionado' })
+    }
     const player = await prisma.player.create({
         data: {
             name: data.name,
             cpf: data.cpf,
             rg: data.rg,
-            address: data.address
+            address: data.address,
+            teamId: teamIdSearch.id
         }
     })
 
