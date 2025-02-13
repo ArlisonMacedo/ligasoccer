@@ -1,0 +1,24 @@
+# POST http://localhost:3333/teams
+# Content-Type: application/json
+
+# {
+#     "name": "Junco F.C",
+#     "city": "Junco",
+#     "couch": "Alan Silva"
+# }
+
+POST http://localhost:3333/players
+Content-Type: application/json
+
+{
+    "name": "Caio Santos Oliveira",
+    "cpf": "12345678999",
+    "rg": "123456789",
+    "address": "Rua Conca, n° 100, Bairro Centro",
+    "id": "e3359ea2-5e9c-48b9-89cf-5b25d5196b69"
+}
+
+
+
+# GET http://localhost:3333/teams
+# Content-Type: application/json
