@@ -15,19 +15,23 @@ model Team {
   name    String
   city    String
   couch   String
+  cpf     String
   players Player[]
 
   @@map("teams")
 }
 
 model Player {
-  id      String  @id @default(uuid())
-  name    String
-  cpf     String
-  rg      String
-  address String
-  Team    Team?   @relation(fields: [teamId], references: [id])
-  teamId  String?
+  id         String  @id @default(uuid())
+  name       String
+  cpf        String
+  rg         String
+  address    String
+  birthdate  String
+  nameMother String
+  nameFather String
+  Team       Team?   @relation(fields: [teamId], references: [id])
+  teamId     String?
 
   @@map("players")
 }

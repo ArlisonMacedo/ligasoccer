@@ -9,6 +9,7 @@ export async function routes(app: FastifyInstance) {
             name: z.string(),
             city: z.string(),
             couch: z.string().min(4),
+            cpf: z.string()
         })
 
         const data = TeamsSchema.parse(request.body)
@@ -18,6 +19,7 @@ export async function routes(app: FastifyInstance) {
                 name: data.name,
                 city: data.city,
                 couch: data.couch,
+                cpf: data.cpf
             }
         })
 
@@ -69,6 +71,9 @@ export async function routes(app: FastifyInstance) {
             cpf: z.string().min(11),
             rg: z.string().min(6),
             address: z.string(),
+            birthdate: z.string(),
+            nameMother: z.string(),
+            nameFather: z.string(),
             id: z.string()
         })
 
@@ -90,6 +95,9 @@ export async function routes(app: FastifyInstance) {
                 cpf: data.cpf,
                 rg: data.rg,
                 address: data.address,
+                birthdate: data.birthdate,
+                nameMother: data.nameMother,
+                nameFather: data.nameFather,
                 teamId: teamIdSearch.id
             }
         })
