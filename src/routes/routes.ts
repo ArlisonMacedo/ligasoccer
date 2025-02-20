@@ -55,7 +55,7 @@ export async function routes(app: FastifyInstance) {
 
         const costTeam = await prisma.player.findMany({
             where: {
-                id: team.id
+                teamId: team.id
             }
         })
 
