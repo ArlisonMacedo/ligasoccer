@@ -53,16 +53,13 @@ export async function routes(app: FastifyInstance) {
             return reply.status(402).send({ message: "Dados Incorretos" })
         }
 
-        const costTeam = await prisma.team.findMany({
+        const costTeam = await prisma.player.findMany({
             where: {
                 id: team.id
-            },
-            include: {
-                players: true
             }
         })
 
-        return reply.status(200).send({ costTeam })
+        return reply.status(200).send(costTeam)
     })
 
     app.post('/players', async (request, reply) => {
