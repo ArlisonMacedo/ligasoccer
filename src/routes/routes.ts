@@ -36,6 +36,32 @@ export async function routes(app: FastifyInstance) {
         return reply.status(200).send({ teams })
     })
 
+    app.get('/teams/only/:id', async (request, reply) => {
+        const IdSearcSchema = z.object({
+            id: z.string()
+        })
+
+        const data = IdSearcSchema.parse(request.params)
+
+        const team = await prisma.team.findFirst({
+            where: {
+                id: data.id
+            }
+        })
+
+        if (!team?.id) {
+            return reply.status(402).send({ message: "Dados Incorretos" })
+        }
+
+        const costTeam = await prisma.team.findMany({
+            where: {
+                id: team.id
+            }
+        })
+
+        return reply.status(200).send(team)
+    })
+
     app.get('/teams/:id', async (request, reply) => {
         const IdSearcSchema = z.object({
             id: z.string()
@@ -100,6 +126,26 @@ export async function routes(app: FastifyInstance) {
         })
 
         return reply.status(201).send({ playerId: player.id })
+    })
+
+    app.post('/login', async (request, reply) => {
+        const tcpf = z.object({
+            cpf: z.string()
+        })
+
+        const data = tcpf.parse(request.body)
+
+        const team = await prisma.team.findFirst({
+            where: {
+                cpf: data.cpf
+            }
+        })
+
+        if (!team?.id) {
+            return reply.status(400).send({ message: 'CPF invalido para o login' })
+        }
+
+        return reply.status(200).send(team)
     })
 }
 
