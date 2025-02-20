@@ -147,5 +147,92 @@ export async function routes(app: FastifyInstance) {
 
         return reply.status(200).send(team)
     })
+
+    app.delete('/players/:id', async (request, reply) => {
+        const playerId = z.object({
+            id: z.string()
+        })
+
+        const data = playerId.parse(request.params)
+
+        const player = await prisma.player.findFirst({
+            where: {
+                id: data.id
+            }
+        })
+
+        if (!player?.id) {
+            return reply.status(400).send({ message: 'Jogador não encontrado' })
+        }
+
+        const response = await prisma.player.delete({
+            where: {
+                id: data.id
+            }
+        })
+
+        return reply.status(200).send({ message: 'jogador deletado' })
+    })
+
+    app.get('/player/:id', async (request, reply) => {
+        const playerId = z.object({
+            id: z.string()
+        })
+
+        const playerIdSchema = playerId.parse(request.params)
+
+        const data = await prisma.player.findFirst({
+            where: {
+                id: playerIdSchema.id
+            },
+            include: {
+                Team: false
+            }
+        })
+
+        return reply.status(200).send(data)
+    })
+
+    app.put('/player/:id', async (request, reply) => {
+        const playerId = z.object({
+            id: z.string()
+        })
+
+
+        const playerIdSchema = playerId.parse(request.params)
+
+        const data = await prisma.player.findFirst({
+            where: {
+                id: playerIdSchema.id
+            },
+            include: {
+                Team: false
+            }
+        })
+
+        if (data?.id) {
+            const bodyPlayerSchema = z.object({
+                name: z.string().min(6),
+                cpf: z.string().min(11),
+                rg: z.string().min(6),
+                address: z.string(),
+                birthdate: z.string(),
+                nameMother: z.string(),
+                nameFather: z.string(),
+            })
+
+            const dataUp = bodyPlayerSchema.parse(request.body)
+            const player = await prisma.player.update({
+                where: {
+                    id: data.id
+                },
+                data: dataUp
+            })
+
+            return reply.status(201).send(player)
+
+        }
+        return reply.status(400).send({ message: 'Id Invalido' })
+    })
 }
 
