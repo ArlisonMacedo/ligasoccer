@@ -7,24 +7,24 @@
 #     "couch": "Alan Silva"
 # }
 
-PUT http://localhost:3333/player/ac172dd8-e4ce-477f-a5cd-43e622484c64
-Content-Type: application/json
-
-{
-    "name": "Alan Caique Dinic",
-    "cpf": "12345678990",
-    "rg": "1234568987",
-    "address": "Rua Conca, n° 100, Bairro Centro",
-    "birthdate": "1998-06-14",
-    "nameMother": "Angela Maria",
-    "nameFather": "José Armando",
-    "teamId":"cbd1c542-9497-406a-8817-3b6f18a5bce0"
-}
-
-
-
-# GET http://localhost:3333/teams/cbd1c542-9497-406a-8817-3b6f18a5bce0
+# PUT http://localhost:3333/player/ac172dd8-e4ce-477f-a5cd-43e622484c64
 # Content-Type: application/json
+
+# {
+#     "name": "Alan Caique Dinic",
+#     "cpf": "12345678990",
+#     "rg": "1234568987",
+#     "address": "Rua Conca, n° 100, Bairro Centro",
+#     "birthdate": "1998-06-14",
+#     "nameMother": "Angela Maria",
+#     "nameFather": "José Armando",
+#     "teamId":"cbd1c542-9497-406a-8817-3b6f18a5bce0"
+# }
+
+
+
+GET http://localhost:3333/player/ac172dd8-e4ce-477f-a5cd-43e622484c64
+Content-Type: application/json
 
 # GET http://localhost:3333/teams/only/cbd1c542-9497-406a-8817-3b6f18a5bce0
 # Content-Type: application/json
