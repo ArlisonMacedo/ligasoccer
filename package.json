@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch --env-file .env src/server.ts",
-    "postinstall": "npx prisma generate"
+    "build": "npx prisma generate && npx tsc"
   },
   "keywords": [],
   "author": "",
