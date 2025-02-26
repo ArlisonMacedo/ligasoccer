@@ -1,21 +1,3 @@
-// import fastify from 'fastify';
-// import cors from '@fastify/cors'
-
-// import { routes } from './routes/routes';
-
-// export const app = fastify()
-
-// app.register(cors, {
-//     origin: '*'
-// })
-// app.register(routes)
-
-
-
-// app.listen({ port: 3333 }).then(() => {
-//     console.log('Running is server')
-// });
-
 import express from 'express'
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
@@ -123,7 +105,7 @@ app.post('/players', async (request: any, response: any) => {
         birthdate: z.string(),
         nameMother: z.string(),
         nameFather: z.string(),
-        id: z.string()
+        teamId: z.string()
     })
 
 
@@ -131,10 +113,10 @@ app.post('/players', async (request: any, response: any) => {
 
     const teamIdSearch = await prisma.team.findFirst({
         where: {
-            id: data.id
+            id: data.teamId
         }
     })
-    // console.log(teamIdSearch?.id)
+    console.log(teamIdSearch?.id)
     if (!teamIdSearch) {
         return response.status(402).send({ message: 'Time Não Selecionado' })
     }
